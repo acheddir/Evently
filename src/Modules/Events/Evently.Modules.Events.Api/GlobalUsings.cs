@@ -1,0 +1,13 @@
+﻿global using System.Reflection;
+global using AutoMapper;
+global using Evently.Modules.Events.Api.Domain;
+global using Evently.Modules.Events.Api.Endpoints;
+global using Evently.Modules.Events.Api.Persistence;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Routing;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.EntityFrameworkCore.Migrations;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
