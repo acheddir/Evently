@@ -1,0 +1,13 @@
+global using System.Data.Common;
+global using System.Reflection;
+global using AutoMapper;
+global using Dapper;
+global using Evently.Modules.Events.Application.Common.Abstractions.Clock;
+global using Evently.Modules.Events.Application.Common.Abstractions.Messaging;
+global using Evently.Modules.Events.Application.Common.Abstractions.Persistence;
+global using Evently.Modules.Events.Application.Events.GetEvent;
+global using Evently.Modules.Events.Domain.Abstractions;
+global using Evently.Modules.Events.Domain.Categories;
+global using Evently.Modules.Events.Domain.Events;
+global using FluentValidation;
+global using MediatR;

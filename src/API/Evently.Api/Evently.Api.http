@@ -1,6 +1,7 @@
-@Evently.Api_HostAddress = http://localhost:5228
+@Evently.Api_HostAddress = https://localhost:5001
 
-GET {{Evently.Api_HostAddress}}/weatherforecast/
+# Create Event
+POST {{Evently.Api_HostAddress}}/events
 Accept: application/json
 
 ###
