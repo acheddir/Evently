@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: eventlydatabase
+  name: eventlydatabase
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: eventlydatabase
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: eventlydatabase
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: evently
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres:latest
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+            failureThreshold: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: eventlydatabase
+          ports:
+            - containerPort: 5432
+              hostPort: 5432
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: eventlydatabase-claim0
+      restartPolicy: Always
+      volumes:
+        - name: eventlydatabase-claim0
+          persistentVolumeClaim:
+            claimName: eventlydatabase-claim0

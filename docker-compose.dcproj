@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
-  <PropertyGroup Label="Globals">
-    <ProjectVersion>2.1</ProjectVersion>
-    <DockerTargetOS>Linux</DockerTargetOS>
-    <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>f46755d7-4560-481e-b427-83a992c3b24b</ProjectGuid>
-    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>evently.api</DockerServiceName>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="docker-compose.override.yml">
-      <DependentUpon>docker-compose.yml</DependentUpon>
-    </None>
-    <None Include="docker-compose.yml" />
-    <None Include=".dockerignore" />
-  </ItemGroup>
+    <PropertyGroup Label="Globals">
+        <ProjectVersion>2.1</ProjectVersion>
+        <DockerTargetOS>Linux</DockerTargetOS>
+        <DockerPublishLocally>False</DockerPublishLocally>
+        <ProjectGuid>f46755d7-4560-481e-b427-83a992c3b24b</ProjectGuid>
+        <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+        <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+        <DockerServiceName>evently.api</DockerServiceName>
+        <DockerComposeProjectName>evently</DockerComposeProjectName>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="docker-compose.override.yml">
+            <DependentUpon>docker-compose.yml</DependentUpon>
+        </None>
+        <None Include="docker-compose.yml" />
+        <None Include=".dockerignore" />
+    </ItemGroup>
 </Project>

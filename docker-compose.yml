@@ -10,6 +10,9 @@ services:
     ports:
     - 5000:8000
     - 5001:8081
+    depends_on:
+        evently.database:
+            condition: service_healthy
 
   evently.database:
     image: postgres:latest
@@ -18,6 +21,11 @@ services:
     - POSTGRES_DB=evently
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=postgres
+    healthcheck:
+        test: ['CMD-SHELL', 'pg_isready']
+        interval: 10s
+        timeout: 5s
+        retries: 5
     volumes:
     - ./.containers/db:/var/lib/postgresql/data
     ports:
