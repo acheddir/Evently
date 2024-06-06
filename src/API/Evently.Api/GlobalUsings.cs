@@ -1,4 +1,11 @@
+global using System.Reflection;
 global using Evently.Api.Extensions;
+global using Evently.Api.Middleware;
 global using Evently.Modules.Events.Infrastructure;
 global using Evently.Modules.Events.Infrastructure.Persistence;
+global using Evently.Common.Application;
+global using Evently.Common.Infrastructure;
+global using Microsoft.AspNetCore.Diagnostics;
+global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
+global using Serilog;

@@ -6,7 +6,7 @@ public sealed class Category : Entity
     {
     }
 
-    public Guid Id { get; private set; }
+    public Guid Id { get; private init; }
 
     public string Name { get; private set; }
 

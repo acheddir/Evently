@@ -1,4 +1,6 @@
-﻿namespace Evently.Modules.Events.Presentation.Events;
+﻿using Evently.Modules.Events.Application.Events.GetEvent;
+
+namespace Evently.Modules.Events.Presentation.Events;
 
 internal static class GetEvent
 {
@@ -6,10 +8,10 @@ internal static class GetEvent
     {
         app.MapGet("events/{id:guid}", async (Guid id, ISender sender) =>
             {
-                EventResponse @event = await sender.Send(new GetEventQuery(id));
+                Result<EventResponse> result = await sender.Send(new GetEventQuery(id));
 
-                return @event is null ? Results.NotFound() : Results.Ok(@event);
+                return result.Match(Results.Ok, ApiResults.Problem);
             })
-        .WithTags(Tags.Events);
+            .WithTags(Tags.Events);
     }
 }

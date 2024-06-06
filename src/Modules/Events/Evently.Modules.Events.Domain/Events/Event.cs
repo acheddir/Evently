@@ -6,7 +6,7 @@ public sealed class Event : Entity
     {
     }
 
-    public Guid Id { get; private set; }
+    public Guid Id { get; init; }
     public Guid CategoryId { get; private set; }
     public string Title { get; private set; }
     public string Description { get; private set; }

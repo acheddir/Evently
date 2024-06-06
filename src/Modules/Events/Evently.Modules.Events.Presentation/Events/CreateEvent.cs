@@ -11,8 +11,14 @@ internal static class CreateEvent
 
                 return result.Match(Results.Ok, ApiResults.Problem);
             })
-        .WithTags(Tags.Events);
+            .WithTags(Tags.Events);
     }
 
-    internal sealed record Request(Guid CategoryId, string Title, string Description, string Location, DateTime StartsAtUtc, DateTime? EndsAtUtc);
+    internal record struct Request(
+        Guid CategoryId,
+        string Title,
+        string Description,
+        string Location,
+        DateTime StartsAtUtc,
+        DateTime? EndsAtUtc);
 }

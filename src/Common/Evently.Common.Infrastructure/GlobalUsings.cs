@@ -1,0 +1,9 @@
+﻿global using System.Data.Common;
+global using System.Reflection;
+global using Evently.Common.Application.Clock;
+global using Evently.Common.Application.Persistence;
+global using Evently.Common.Infrastructure.Factories;
+global using Evently.Common.Infrastructure.Services.Clock;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.DependencyInjection.Extensions;
+global using Npgsql;

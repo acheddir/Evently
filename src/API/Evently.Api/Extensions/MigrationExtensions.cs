@@ -1,6 +1,6 @@
 ﻿namespace Evently.Api.Extensions;
 
-public static class MigrationExtensions
+internal static class MigrationExtensions
 {
     internal static void ApplyMigrations(this IApplicationBuilder app)
     {
