@@ -1,4 +1,4 @@
-﻿namespace Evently.Common.Application.Behaviors;
+﻿namespace Evently.Common.Application.Logging;
 
 public static partial class Log
 {

@@ -22,11 +22,19 @@ Assembly[] assemblies = [
 
 builder.Services.AddApplication(assemblies);
 
+string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
+string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+
 builder.Services.AddInfrastructure(
-    builder.Configuration.GetConnectionString("Database")!,
+    dbConnectionString,
+    redisConnectionString,
     assemblies);
 
 builder.Configuration.AddModuleConfiguration(["events"]);
+
+builder.Services.AddHealthChecks()
+    .AddNpgSql(dbConnectionString)
+    .AddRedis(redisConnectionString);
 
 builder.Services.AddEventModule(builder.Configuration);
 
@@ -41,8 +49,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapEndpoints();
 
-EventsModule.MapEndpoints(app);
+app.MapHealthChecks("health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();

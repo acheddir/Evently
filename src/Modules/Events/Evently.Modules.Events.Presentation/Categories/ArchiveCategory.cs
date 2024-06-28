@@ -1,10 +1,10 @@
 ﻿namespace Evently.Modules.Events.Presentation.Categories;
 
-internal static class ArchiveCategory
+internal sealed class ArchiveCategory : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapPut("categories/{id:guid}/archive", async (Guid id, ISender sender) =>
+        endpoints.MapPut("categories/{id:guid}/archive", async (Guid id, ISender sender) =>
         {
             Result result = await sender.Send(new ArchiveCategoryCommand(id));
 

@@ -1,10 +1,10 @@
 ﻿namespace Evently.Modules.Events.Presentation.Events;
 
-internal static class CancelEvent
+internal sealed class CancelEvent : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapDelete("events/{id:guid}/cancel", async (Guid id, ISender sender) =>
+        endpoints.MapDelete("events/{id:guid}/cancel", async (Guid id, ISender sender) =>
             {
                 CancelEventCommand command = new(id);
                 Result result = await sender.Send(command);

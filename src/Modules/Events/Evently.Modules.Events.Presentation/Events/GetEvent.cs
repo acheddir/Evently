@@ -2,11 +2,11 @@
 
 namespace Evently.Modules.Events.Presentation.Events;
 
-internal static class GetEvent
+internal sealed class GetEvent : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapGet("events/{id:guid}", async (Guid id, ISender sender) =>
+        endpoints.MapGet("events/{id:guid}", async (Guid id, ISender sender) =>
             {
                 Result<EventResponse> result = await sender.Send(new GetEventQuery(id));
 

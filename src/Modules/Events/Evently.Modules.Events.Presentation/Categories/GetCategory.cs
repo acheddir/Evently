@@ -2,11 +2,11 @@
 
 namespace Evently.Modules.Events.Presentation.Categories;
 
-internal static class GetCategory
+internal sealed class GetCategory : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapGet("categories/{id:guid}", async (Guid id, ISender sender) =>
+        endpoints.MapGet("categories/{id:guid}", async (Guid id, ISender sender) =>
         {
             Result<CategoryResponse> result = await sender.Send(new GetCategoryQuery(id));
 

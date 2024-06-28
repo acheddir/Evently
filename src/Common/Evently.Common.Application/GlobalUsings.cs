@@ -1,6 +1,7 @@
 ﻿global using System.Data.Common;
 global using System.Reflection;
 global using Evently.Common.Application.Behaviors;
+global using Evently.Common.Application.Exceptions;
 global using Evently.Common.Application.Messaging;
 global using Evently.Common.Domain;
 global using FluentValidation;

@@ -1,4 +1,4 @@
-﻿namespace Evently.Modules.Events.Presentation.Common.Mappings;
+﻿namespace Evently.Modules.Events.Presentation.Mappings;
 
 public class EventsProfile : Profile
 {

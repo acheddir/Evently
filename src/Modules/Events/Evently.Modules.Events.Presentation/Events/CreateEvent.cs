@@ -1,10 +1,10 @@
 ﻿namespace Evently.Modules.Events.Presentation.Events;
 
-internal static class CreateEvent
+internal sealed class CreateEvent : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapPost("events", async (Request request, IMapper mapper, ISender sender) =>
+        endpoints.MapPost("events", async (Request request, IMapper mapper, ISender sender) =>
             {
                 CreateEventCommand command = mapper.Map<CreateEventCommand>(request);
                 Result<Guid> result = await sender.Send(command);

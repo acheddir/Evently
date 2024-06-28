@@ -11,6 +11,7 @@ global using Evently.Modules.Events.Presentation.Categories;
 global using Evently.Modules.Events.Presentation.Events;
 global using Evently.Modules.Events.Presentation.TicketTypes;
 global using Evently.Common.Infrastructure.Constants;
+global using Evently.Common.Presentation.Endpoints;
 global using Microsoft.AspNetCore.Routing;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

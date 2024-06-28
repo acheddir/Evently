@@ -1,4 +1,4 @@
-﻿namespace Evently.Modules.Events.Presentation.Common.Extensions;
+﻿namespace Evently.Common.Presentation.ApiResults;
 
 public static class ResultExtensions
 {

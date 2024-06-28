@@ -1,10 +1,10 @@
 ﻿namespace Evently.Modules.Events.Presentation.Categories;
 
-internal static class CreateCategory
+internal sealed class CreateCategory : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapPost("categories", async (Request request, IMapper mapper, ISender sender) =>
+        endpoints.MapPost("categories", async (Request request, IMapper mapper, ISender sender) =>
             {
                 CreateCategoryCommand command = mapper.Map<CreateCategoryCommand>(request);
                 Result<Guid> result = await sender.Send(command);

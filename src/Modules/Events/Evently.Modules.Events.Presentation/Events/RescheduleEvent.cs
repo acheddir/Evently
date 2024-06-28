@@ -1,10 +1,10 @@
 ﻿namespace Evently.Modules.Events.Presentation.Events;
 
-internal static class RescheduleEvent
+internal sealed class RescheduleEvent : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapPut("events/{id:guid}/reschedule", async (Guid id, Request request, IMapper mapper, ISender sender) =>
+        endpoints.MapPut("events/{id:guid}/reschedule", async (Guid id, Request request, IMapper mapper, ISender sender) =>
         {
             RescheduleEventCommand command = mapper.Map<RescheduleEventCommand>(request);
             command.EventId = id;

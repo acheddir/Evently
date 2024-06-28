@@ -2,11 +2,11 @@
 
 namespace Evently.Modules.Events.Presentation.Events;
 
-internal static class GetEvents
+internal sealed class GetEvents : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapGet("events", async (
+        endpoints.MapGet("events", async (
                 ISender sender,
                 Guid? categoryId,
                 DateTime? startDate,

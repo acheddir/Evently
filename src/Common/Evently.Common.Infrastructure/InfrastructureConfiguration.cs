@@ -1,10 +1,13 @@
-﻿namespace Evently.Common.Infrastructure;
+﻿using StackExchange.Redis;
+
+namespace Evently.Common.Infrastructure;
 
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         string dbConnectionString,
+        string redisConnectionString,
         Assembly[] assemblies)
     {
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(dbConnectionString).Build();
@@ -13,6 +16,17 @@ public static class InfrastructureConfiguration
         services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+
+        IConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+        services.TryAddSingleton(connectionMultiplexer);
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.ConnectionMultiplexerFactory = () => Task.FromResult(connectionMultiplexer);
+        });
+
+        services.TryAddSingleton<ICacheService, CacheService>();
 
         services.AddAutoMapper(assemblies);
 

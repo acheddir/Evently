@@ -1,10 +1,10 @@
 ﻿namespace Evently.Modules.Events.Presentation.Categories;
 
-internal static class UpdateCategory
+internal sealed class UpdateCategory : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapPut("categories/{id:guid}", async (Guid id, Request request, IMapper mapper, ISender sender) =>
+        endpoints.MapPut("categories/{id:guid}", async (Guid id, Request request, IMapper mapper, ISender sender) =>
             {
                 UpdateCategoryCommand command = mapper.Map<UpdateCategoryCommand>(request);
                 command.CategoryId = id;

@@ -1,6 +1,4 @@
-﻿using Evently.Common.Application.Exceptions;
-
-namespace Evently.Common.Application.Behaviors;
+﻿namespace Evently.Common.Application.Behaviors;
 
 internal sealed class ExceptionHandlingPipelineBehavior<TRequest, TResponse>(
     ILogger<ExceptionHandlingPipelineBehavior<TRequest, TResponse>> logger)
@@ -15,7 +13,7 @@ internal sealed class ExceptionHandlingPipelineBehavior<TRequest, TResponse>(
         }
         catch (Exception exception)
         {
-            Log.UnhandledExceptionFor(logger, typeof(TRequest).Name);
+            Logging.Log.UnhandledExceptionFor(logger, typeof(TRequest).Name);
 
             throw new EventlyException(typeof(TRequest).Name, innerException: exception);
         }

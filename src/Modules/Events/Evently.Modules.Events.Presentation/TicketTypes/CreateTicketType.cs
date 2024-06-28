@@ -1,10 +1,10 @@
 ﻿namespace Evently.Modules.Events.Presentation.TicketTypes;
 
-internal static class CreateTicketType
+internal sealed class CreateTicketType : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapPost("ticket-types", async (Request request, IMapper mapper, ISender sender) =>
+        endpoints.MapPost("ticket-types", async (Request request, IMapper mapper, ISender sender) =>
             {
                 CreateTicketTypeCommand command = mapper.Map<CreateTicketTypeCommand>(request);
 

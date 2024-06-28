@@ -1,6 +1,5 @@
 ﻿namespace Evently.Common.Application.Behaviors;
 
-
 public class RequestLoggingPipelineBehavior<TRequest, TResponse>(
     ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> logger)
     : IPipelineBehavior<TRequest, TResponse>
@@ -17,19 +16,19 @@ public class RequestLoggingPipelineBehavior<TRequest, TResponse>(
 
         using (LogContext.PushProperty("Module", moduleName))
         {
-            Log.ProcessingRequest(logger, requestName);
+            Logging.Log.ProcessingRequest(logger, requestName);
 
             TResponse result = await next();
 
             if (result.IsSuccess)
             {
-                Log.CompletedRequest(logger, requestName);
+                Logging.Log.CompletedRequest(logger, requestName);
             }
             else
             {
                 using (LogContext.PushProperty("Error", result.Error, true))
                 {
-                    Log.CompletedRequestWithError(logger, requestName);
+                    Logging.Log.CompletedRequestWithError(logger, requestName);
                 }
             }
 

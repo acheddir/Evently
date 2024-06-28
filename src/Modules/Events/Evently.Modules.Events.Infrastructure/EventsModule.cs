@@ -2,14 +2,15 @@
 
 public static class EventsModule
 {
-    public static void MapEndpoints(IEndpointRouteBuilder app)
+    public static IServiceCollection AddEventModule(this IServiceCollection services, IConfiguration configuration)
     {
-        EventEndpoints.MapEndpoints(app);
-        TicketTypeEndpoints.MapEndpoints(app);
-        CategoryEndpoints.MapEndpoints(app);
+        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+        services.AddInfrastructure(configuration);
+
+        return services;
     }
 
-    public static IServiceCollection AddEventModule(this IServiceCollection services, IConfiguration configuration)
+    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         string dbConnectionString = configuration.GetConnectionString("Database");
 
@@ -26,7 +27,5 @@ public static class EventsModule
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
-
-        return services;
     }
 }

@@ -2,16 +2,29 @@
 
 namespace Evently.Modules.Events.Presentation.Categories;
 
-internal static class GetCategories
+internal sealed class GetCategories : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        app.MapGet("categories", async (ISender sender) =>
-        {
-            Result<IReadOnlyCollection<CategoryResponse>> result = await sender.Send(new GetCategoriesQuery());
+        endpoints.MapGet("categories", async (ISender sender, ICacheService cacheService) =>
+            {
+                IReadOnlyCollection<CategoryResponse> categoryResponse =
+                    await cacheService.GetAsync<IReadOnlyCollection<CategoryResponse>>("categories");
 
-            return result.Match(Results.Ok, ApiResults.Problem);
-        })
-        .WithTags(Tags.Categories);
+                if (categoryResponse is not null)
+                {
+                    return Results.Ok(categoryResponse);
+                }
+
+                Result<IReadOnlyCollection<CategoryResponse>> result = await sender.Send(new GetCategoriesQuery());
+
+                if (result.IsSuccess)
+                {
+                    await cacheService.SetAsync("categories", result.Value);
+                }
+                
+                return result.Match(Results.Ok, ApiResults.Problem);
+            })
+            .WithTags(Tags.Categories);
     }
 }
