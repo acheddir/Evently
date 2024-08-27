@@ -1,26 +1,29 @@
-﻿namespace Evently.Modules.Events.Infrastructure;
+﻿using Evently.Common.Infrastructure.Interceptors;
+
+namespace Evently.Modules.Events.Infrastructure;
 
 public static class EventsModule
 {
     public static IServiceCollection AddEventModule(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
-        services.AddInfrastructure(configuration);
+        services.AddEventsInfrastructure(configuration);
 
         return services;
     }
 
-    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    private static void AddEventsInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         string dbConnectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<EventsDbContext>(options =>
+        services.AddDbContext<EventsDbContext>((sp, options) =>
             options
                 .UseNpgsql(
                     dbConnectionString,
                     npgsqlOptions =>
                         npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
-                .UseSnakeCaseNamingConvention());
+                .UseSnakeCaseNamingConvention()
+                .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
 

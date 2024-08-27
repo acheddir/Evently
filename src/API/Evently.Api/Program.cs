@@ -1,5 +1,18 @@
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+Assembly[] assemblies =
+[
+    Evently.Modules.Events.Application.AssemblyReference.Assembly,
+    Evently.Modules.Events.Infrastructure.AssemblyReference.Assembly,
+    Evently.Modules.Events.Presentation.AssemblyReference.Assembly,
+    Evently.Modules.Users.Application.AssemblyReference.Assembly,
+    Evently.Modules.Users.Infrastructure.AssemblyReference.Assembly,
+    Evently.Modules.Users.Presentation.AssemblyReference.Assembly
+];
+
+string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
+string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+
 builder.Host.UseSerilog((context, loggerConfiguration) =>
 {
     loggerConfiguration.ReadFrom.Configuration(context.Configuration);
@@ -14,29 +27,17 @@ builder.Services.AddSwaggerGen(options =>
     options.CustomSchemaIds(t => t.FullName!.Replace("+", "."));
 });
 
-Assembly[] assemblies = [
-    Evently.Modules.Events.Application.AssemblyReference.Assembly,
-    AssemblyReference.Assembly,
-    Evently.Modules.Events.Presentation.AssemblyReference.Assembly
-];
+builder.Services.AddCommonApplication(assemblies);
+builder.Services.AddCommonInfrastructure(dbConnectionString, redisConnectionString, assemblies);
 
-builder.Services.AddApplication(assemblies);
-
-string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
-string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
-
-builder.Services.AddInfrastructure(
-    dbConnectionString,
-    redisConnectionString,
-    assemblies);
-
-builder.Configuration.AddModuleConfiguration(["events"]);
+builder.Configuration.AddModuleConfiguration(["events", "users"]);
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(dbConnectionString)
     .AddRedis(redisConnectionString);
 
 builder.Services.AddEventModule(builder.Configuration);
+builder.Services.AddUsersModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 

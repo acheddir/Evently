@@ -4,10 +4,9 @@ public sealed class PublishDomainEventsInterceptor(IServiceScopeFactory serviceS
     : SaveChangesInterceptor
 {
     public override async ValueTask<int> SavedChangesAsync(
-        SaveChangesCompletedEventData eventData,
-        int result,
-        CancellationToken cancellationToken = default
-    )
+            SaveChangesCompletedEventData eventData,
+            int result,
+            CancellationToken cancellationToken = default)
     {
         if (eventData.Context is not null)
         {
@@ -28,7 +27,7 @@ public sealed class PublishDomainEventsInterceptor(IServiceScopeFactory serviceS
                 entity.ClearDomainEvents();
                 return domainEvents;
             })
-            .ToList();
+        .ToList();
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();

@@ -4,7 +4,7 @@ internal sealed class CancelEvent : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapDelete("events/{id:guid}/cancel", async (Guid id, ISender sender) =>
+        endpoints.MapPut("events/{id:guid}/cancel", async (Guid id, ISender sender) =>
             {
                 CancelEventCommand command = new(id);
                 Result result = await sender.Send(command);

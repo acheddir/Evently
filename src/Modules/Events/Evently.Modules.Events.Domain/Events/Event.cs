@@ -4,6 +4,7 @@ public sealed class Event : Entity
 {
     private Event()
     {
+        StartsAtUtc = DateTime.UtcNow;
     }
 
     public Guid Id { get; init; }
