@@ -6,26 +6,27 @@ public static class UsersModule
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddInfrastructure(configuration);
-
         services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+        services.AddUsersInfrastructure(configuration);
 
         return services;
     }
 
-    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    private static void AddUsersInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        string dbConnectionString = configuration.GetConnectionString("Database");
+
         services.AddDbContext<UsersDbContext>((sp, options) =>
             options
                 .UseNpgsql(
-                    configuration.GetConnectionString("Database"),
+                    dbConnectionString,
                     npgsqlOptions => npgsqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
-                .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>())
-                .UseSnakeCaseNamingConvention());
+                .UseSnakeCaseNamingConvention()
+                .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
 
         services.AddScoped<IUserRepository, UserRepository>();
-        
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<IUnitOfWork>());
     }
 }

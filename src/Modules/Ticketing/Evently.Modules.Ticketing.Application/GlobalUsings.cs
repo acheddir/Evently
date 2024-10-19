@@ -1,0 +1,11 @@
+﻿global using System.Data.Common;
+global using System.Reflection;
+global using Dapper;
+global using Evently.Common.Application.Caching;
+global using Evently.Common.Application.Messaging;
+global using Evently.Common.Application.Persistence;
+global using Evently.Common.Domain;
+global using Evently.Modules.Events.PublicApi;
+global using Evently.Modules.Ticketing.Application.Abstractions.Persistence;
+global using Evently.Modules.Ticketing.Domain.Customers;
+global using FluentValidation;

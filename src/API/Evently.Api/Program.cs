@@ -1,13 +1,17 @@
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-Assembly[] assemblies =
+Assembly[] applicationAssemblies =
 [
     Evently.Modules.Events.Application.AssemblyReference.Assembly,
-    Evently.Modules.Events.Infrastructure.AssemblyReference.Assembly,
-    Evently.Modules.Events.Presentation.AssemblyReference.Assembly,
     Evently.Modules.Users.Application.AssemblyReference.Assembly,
-    Evently.Modules.Users.Infrastructure.AssemblyReference.Assembly,
-    Evently.Modules.Users.Presentation.AssemblyReference.Assembly
+    Evently.Modules.Ticketing.Application.AssemblyReference.Assembly,
+];
+
+Assembly[] presentationAssemblies =
+[
+    Evently.Modules.Events.Presentation.AssemblyReference.Assembly,
+    Evently.Modules.Users.Presentation.AssemblyReference.Assembly,
+    Evently.Modules.Ticketing.Presentation.AssemblyReference.Assembly,
 ];
 
 string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
@@ -27,10 +31,14 @@ builder.Services.AddSwaggerGen(options =>
     options.CustomSchemaIds(t => t.FullName!.Replace("+", "."));
 });
 
-builder.Services.AddCommonApplication(assemblies);
-builder.Services.AddCommonInfrastructure(dbConnectionString, redisConnectionString, assemblies);
+builder.Services.AddApplication(applicationAssemblies);
+builder.Services.AddInfrastructure(
+    [TicketingModule.ConfigureConsumers],
+    dbConnectionString,
+    redisConnectionString,
+    presentationAssemblies);
 
-builder.Configuration.AddModuleConfiguration(["events", "users"]);
+builder.Configuration.AddModuleConfiguration(["events", "users", "ticketing"]);
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(dbConnectionString)
@@ -38,6 +46,7 @@ builder.Services.AddHealthChecks()
 
 builder.Services.AddEventModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddTicketingModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 

@@ -1,12 +1,14 @@
 global using System.Reflection;
 global using Evently.Api.Extensions;
 global using Evently.Api.Middleware;
-global using Evently.Modules.Events.Infrastructure;
-global using Evently.Modules.Events.Infrastructure.Persistence;
-global using Evently.Modules.Users.Infrastructure;
 global using Evently.Common.Application;
 global using Evently.Common.Infrastructure;
 global using Evently.Common.Presentation.Endpoints;
+global using Evently.Modules.Events.Infrastructure;
+global using Evently.Modules.Events.Infrastructure.Persistence;
+global using Evently.Modules.Ticketing.Infrastructure;
+global using Evently.Modules.Ticketing.Infrastructure.Persistence;
+global using Evently.Modules.Users.Infrastructure;
 global using Evently.Modules.Users.Infrastructure.Persistence;
 global using HealthChecks.UI.Client;
 global using Microsoft.AspNetCore.Diagnostics;

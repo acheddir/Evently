@@ -1,5 +1,3 @@
-using Evently.Modules.Users.Application.Users.UpdateUser;
-
 namespace Evently.Modules.Users.Presentation.Users;
 
 internal sealed class UpdateUserProfile : IEndpoint
@@ -18,9 +16,5 @@ internal sealed class UpdateUserProfile : IEndpoint
             .WithTags(Tags.Users);
     }
 
-    internal sealed class Request
-    {
-        public string FirstName { get; init; }
-        public string LastName { get; init; }
-    }
+    internal record struct Request(string FirstName, string LastName);
 }

@@ -1,4 +1,3 @@
-
 namespace Evently.Modules.Users.Presentation;
 
 public static class AssemblyReference

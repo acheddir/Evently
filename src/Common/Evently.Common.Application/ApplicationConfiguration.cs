@@ -2,7 +2,7 @@
 
 public static class ApplicationConfiguration
 {
-    public static IServiceCollection AddCommonApplication(this IServiceCollection services, Assembly[] assemblies)
+    public static IServiceCollection AddApplication(this IServiceCollection services, Assembly[] assemblies)
     {
         services.AddMediatR(config =>
         {

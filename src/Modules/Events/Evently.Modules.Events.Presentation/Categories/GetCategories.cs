@@ -22,7 +22,7 @@ internal sealed class GetCategories : IEndpoint
                 {
                     await cacheService.SetAsync("categories", result.Value);
                 }
-                
+
                 return result.Match(Results.Ok, ApiResults.Problem);
             })
             .WithTags(Tags.Categories);

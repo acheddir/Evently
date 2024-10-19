@@ -13,11 +13,11 @@ namespace Evently.Modules.Users.Infrastructure.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "Users");
+                name: "users");
 
             migrationBuilder.CreateTable(
                 name: "users",
-                schema: "Users",
+                schema: "users",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -32,7 +32,7 @@ namespace Evently.Modules.Users.Infrastructure.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "ix_users_email",
-                schema: "Users",
+                schema: "users",
                 table: "users",
                 column: "email",
                 unique: true);
@@ -43,7 +43,7 @@ namespace Evently.Modules.Users.Infrastructure.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "users",
-                schema: "Users");
+                schema: "users");
         }
     }
 }

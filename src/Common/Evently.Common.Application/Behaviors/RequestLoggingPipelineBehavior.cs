@@ -8,7 +8,7 @@ public class RequestLoggingPipelineBehavior<TRequest, TResponse>(
 {
     public async Task<TResponse> Handle(
         TRequest request,
-        RequestHandlerDelegate<TResponse> next, 
+        RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
         string moduleName = GetModuleName(typeof(TRequest).FullName!);

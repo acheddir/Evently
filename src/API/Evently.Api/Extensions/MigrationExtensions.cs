@@ -1,4 +1,5 @@
-﻿namespace Evently.Api.Extensions;
+﻿
+namespace Evently.Api.Extensions;
 
 internal static class MigrationExtensions
 {
@@ -7,6 +8,7 @@ internal static class MigrationExtensions
         using IServiceScope scope = app.ApplicationServices.CreateScope();
         ApplyMigration<EventsDbContext>(scope);
         ApplyMigration<UsersDbContext>(scope);
+        ApplyMigration<TicketingDbContext>(scope);
     }
 
     private static void ApplyMigration<TDbContext>(IServiceScope scope)

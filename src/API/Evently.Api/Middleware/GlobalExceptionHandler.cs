@@ -12,9 +12,9 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
             Title = "Server failure",
             Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1"
         };
-        
+
         httpContext.Response.StatusCode = problemDetails.Status.Value;
-        
+
         await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
 
         return true;

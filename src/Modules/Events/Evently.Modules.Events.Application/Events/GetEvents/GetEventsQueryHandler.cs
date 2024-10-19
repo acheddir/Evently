@@ -36,7 +36,7 @@ internal sealed class GetEventsQueryHandler(IDbConnectionFactory dbConnectionFac
 
         int totalCount = await connection.ExecuteScalarAsync<int>(sql, parameters);
 
-        return totalCount; 
+        return totalCount;
     }
 
     private static async Task<IReadOnlyCollection<EventResponse>> GetEventsAsync(

@@ -4,7 +4,7 @@ internal sealed class PublishEventCommandHandler(
     IEventRepository eventRepository,
     ITicketTypeRepository ticketTypeRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandler<PublishEventCommand> 
+    : ICommandHandler<PublishEventCommand>
 {
     public async Task<Result> Handle(PublishEventCommand request, CancellationToken cancellationToken)
     {

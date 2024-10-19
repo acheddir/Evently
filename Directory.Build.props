@@ -12,6 +12,7 @@
         <GenerateDocumentationFile>false</GenerateDocumentationFile>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     </PropertyGroup>
+
     <ItemGroup Condition="'$(MSBuildProjectExtension)' != '.dcproj'">
         <PackageReference Include="SonarAnalyzer.CSharp" Version="9.25.1.91650">
             <PrivateAssets>all</PrivateAssets>

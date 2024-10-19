@@ -1,6 +1,9 @@
 global using System.Reflection;
 global using AutoMapper;
 global using Evently.Common.Application.Caching;
+global using Evently.Common.Domain;
+global using Evently.Common.Presentation.ApiResults;
+global using Evently.Common.Presentation.Endpoints;
 global using Evently.Modules.Events.Application.Categories.ArchiveCategory;
 global using Evently.Modules.Events.Application.Categories.CreateCategory;
 global using Evently.Modules.Events.Application.Categories.UpdateCategory;
@@ -15,9 +18,6 @@ global using Evently.Modules.Events.Application.TicketTypes.UpdateTicketTypePric
 global using Evently.Modules.Events.Presentation.Categories;
 global using Evently.Modules.Events.Presentation.Events;
 global using Evently.Modules.Events.Presentation.TicketTypes;
-global using Evently.Common.Domain;
-global using Evently.Common.Presentation.ApiResults;
-global using Evently.Common.Presentation.Endpoints;
 global using MediatR;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Http;

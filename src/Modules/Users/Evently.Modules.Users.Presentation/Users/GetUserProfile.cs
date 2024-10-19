@@ -1,5 +1,3 @@
-using Evently.Modules.Users.Application.Users.GetUser;
-
 namespace Evently.Modules.Users.Presentation.Users;
 
 internal sealed class GetUserProfile : IEndpoint

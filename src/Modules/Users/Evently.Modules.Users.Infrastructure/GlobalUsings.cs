@@ -1,10 +1,10 @@
 ﻿global using System.Reflection;
-global using Evently.Common.Infrastructure.Interceptors;
+global using Evently.Common.Infrastructure.Services.Persistence.Interceptors;
 global using Evently.Common.Presentation.Endpoints;
 global using Evently.Modules.Users.Application.Abstractions.Persistence;
 global using Evently.Modules.Users.Domain.Users;
 global using Evently.Modules.Users.Infrastructure.Persistence;
-global using Evently.Modules.Users.Infrastructure.Users;
+global using Evently.Modules.Users.Infrastructure.Persistence.Users;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using Microsoft.EntityFrameworkCore.Migrations;

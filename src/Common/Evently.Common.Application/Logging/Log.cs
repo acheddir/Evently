@@ -13,13 +13,13 @@ public static partial class Log
         Level = LogLevel.Information,
         Message = "Completed request {RequestName}")]
     public static partial void CompletedRequest(ILogger logger, string requestName);
-    
+
     [LoggerMessage(
         EventId = 12,
         Level = LogLevel.Error,
         Message = "Completed request {RequestName} with error")]
     public static partial void CompletedRequestWithError(ILogger logger, string requestName);
-    
+
     [LoggerMessage(
         EventId = 13,
         Level = LogLevel.Error,

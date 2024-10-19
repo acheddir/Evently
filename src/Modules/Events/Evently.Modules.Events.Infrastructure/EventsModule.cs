@@ -1,6 +1,4 @@
-﻿using Evently.Common.Infrastructure.Interceptors;
-
-namespace Evently.Modules.Events.Infrastructure;
+﻿namespace Evently.Modules.Events.Infrastructure;
 
 public static class EventsModule
 {
@@ -30,5 +28,7 @@ public static class EventsModule
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
+
+        services.AddScoped<IEventsApi, EventsApi>();
     }
 }

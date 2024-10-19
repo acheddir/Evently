@@ -7,7 +7,7 @@ public class UsersDbContext(DbContextOptions<UsersDbContext> options) : DbContex
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema(Schemas.Users);
-        
+
         modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 }
