@@ -2,12 +2,11 @@
 
 public class CancelEventCommandHandler(
     IDateTimeProvider dateTimeProvider,
-    IEventRepository eventRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<CancelEventCommand>
+    IEventsUnitOfWork eventsUnitOfWork) : ICommandHandler<CancelEventCommand>
 {
     public async Task<Result> Handle(CancelEventCommand request, CancellationToken cancellationToken)
     {
-        Event? @event = await eventRepository.GetAsync(request.EventId, cancellationToken);
+        Event? @event = await eventsUnitOfWork.Events.GetAsync(request.EventId, cancellationToken);
 
         if (@event is null)
         {
@@ -21,7 +20,7 @@ public class CancelEventCommandHandler(
             return Result.Failure(result.Error);
         }
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await eventsUnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

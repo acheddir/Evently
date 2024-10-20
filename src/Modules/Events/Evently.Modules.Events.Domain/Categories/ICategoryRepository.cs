@@ -1,8 +1,5 @@
 ﻿namespace Evently.Modules.Events.Domain.Categories;
 
-public interface ICategoryRepository
+public interface ICategoryRepository : IRepository<Category>
 {
-    Task<Category?> GetAsync(Guid id, CancellationToken cancellationToken = default);
-
-    void Insert(Category category);
 }

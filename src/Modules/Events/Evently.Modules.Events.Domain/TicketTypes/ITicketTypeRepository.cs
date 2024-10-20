@@ -1,10 +1,6 @@
 ﻿namespace Evently.Modules.Events.Domain.TicketTypes;
 
-public interface ITicketTypeRepository
+public interface ITicketTypeRepository : IRepository<TicketType>
 {
-    Task<TicketType?> GetAsync(Guid id, CancellationToken cancellationToken = default);
-
     Task<bool> ExistsAsync(Guid eventId, CancellationToken cancellationToken = default);
-
-    void Insert(TicketType ticketType);
 }

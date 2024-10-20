@@ -1,13 +1,12 @@
 ﻿namespace Evently.Modules.Events.Application.TicketTypes.UpdateTicketTypePrice;
 
 internal sealed class UpdateTicketTypePriceCommandHandler(
-    ITicketTypeRepository ticketTypeRepository,
-    IUnitOfWork unitOfWork)
+    IEventsUnitOfWork eventsUnitOfWork)
     : ICommandHandler<UpdateTicketTypePriceCommand>
 {
     public async Task<Result> Handle(UpdateTicketTypePriceCommand request, CancellationToken cancellationToken)
     {
-        TicketType? ticketType = await ticketTypeRepository.GetAsync(request.TicketTypeId, cancellationToken);
+        TicketType? ticketType = await eventsUnitOfWork.TicketTypes.GetAsync(request.TicketTypeId, cancellationToken);
 
         if (ticketType is null)
         {
@@ -16,7 +15,7 @@ internal sealed class UpdateTicketTypePriceCommandHandler(
 
         ticketType.UpdatePrice(request.Price);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await eventsUnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

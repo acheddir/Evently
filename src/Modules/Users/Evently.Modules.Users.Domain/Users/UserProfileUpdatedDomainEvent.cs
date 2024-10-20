@@ -1,10 +1,8 @@
 namespace Evently.Modules.Users.Domain.Users;
 
-public sealed class UserProfileUpdatedDomainEvent(Guid userId, string firstName, string lastName)
+public sealed class UserProfileUpdatedDomainEvent(Guid userId)
     : DomainEvent
 {
-    public Guid UserId { get; init; } = userId;
-    public string FirstName { get; init; } = firstName;
-    public string LastName { get; init; } = lastName;
+    public Guid UserId { get; } = userId;
 }
 

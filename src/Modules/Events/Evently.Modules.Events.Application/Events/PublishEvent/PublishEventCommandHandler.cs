@@ -1,21 +1,19 @@
 ﻿namespace Evently.Modules.Events.Application.Events.PublishEvent;
 
 internal sealed class PublishEventCommandHandler(
-    IEventRepository eventRepository,
-    ITicketTypeRepository ticketTypeRepository,
-    IUnitOfWork unitOfWork)
+    IEventsUnitOfWork eventsUnitOfWork)
     : ICommandHandler<PublishEventCommand>
 {
     public async Task<Result> Handle(PublishEventCommand request, CancellationToken cancellationToken)
     {
-        Event? @event = await eventRepository.GetAsync(request.EventId, cancellationToken);
+        Event? @event = await eventsUnitOfWork.Events.GetAsync(request.EventId, cancellationToken);
 
         if (@event is null)
         {
             return Result.Failure(EventErrors.NotFound(request.EventId));
         }
 
-        if (!await ticketTypeRepository.ExistsAsync(@event.Id, cancellationToken))
+        if (!await eventsUnitOfWork.TicketTypes.ExistsAsync(@event.Id, cancellationToken))
         {
             return Result.Failure(EventErrors.NoTicketsFound);
         }
@@ -27,7 +25,7 @@ internal sealed class PublishEventCommandHandler(
             return Result.Failure(result.Error);
         }
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await eventsUnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

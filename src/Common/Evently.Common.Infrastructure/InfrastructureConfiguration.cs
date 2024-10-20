@@ -1,7 +1,4 @@
-﻿using Evently.Common.Infrastructure.Services.Persistence.Factories;
-using Evently.Common.Infrastructure.Services.Persistence.Interceptors;
-
-namespace Evently.Common.Infrastructure;
+﻿namespace Evently.Common.Infrastructure;
 
 public static class InfrastructureConfiguration
 {
@@ -10,8 +7,7 @@ public static class InfrastructureConfiguration
         Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
         string dbConnectionString,
         string redisConnectionString,
-        Assembly[] assemblies
-    )
+        Assembly[] assemblies)
     {
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(dbConnectionString).Build();
         services.TryAddSingleton(npgsqlDataSource);
@@ -42,16 +38,20 @@ public static class InfrastructureConfiguration
         services.AddMassTransit(configure =>
         {
             // Configure consumers
-            foreach (Action<IRegistrationConfigurator> configureConsumer in moduleConfigureConsumers)
+            foreach (
+                Action<IRegistrationConfigurator> configureConsumer in moduleConfigureConsumers
+            )
             {
                 configureConsumer(configure);
             }
 
             configure.SetKebabCaseEndpointNameFormatter();
-            configure.UsingInMemory((context, cfg) =>
-            {
-                cfg.ConfigureEndpoints(context);
-            });
+            configure.UsingInMemory(
+                (context, cfg) =>
+                {
+                    cfg.ConfigureEndpoints(context);
+                }
+            );
         });
 
         services.AddAutoMapper(assemblies);

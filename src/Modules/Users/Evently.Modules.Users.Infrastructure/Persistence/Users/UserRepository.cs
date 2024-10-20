@@ -2,13 +2,23 @@
 
 public class UserRepository(UsersDbContext context) : IUserRepository
 {
-    public Task<User?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public ValueTask<User?> GetAsync(object id, CancellationToken cancellationToken = default)
     {
-        return context.Users.SingleOrDefaultAsync(u => u.Id == id, cancellationToken);
+        return context.Users.FindAsync([id], cancellationToken);
     }
 
-    public void Insert(User user)
+    public void Insert(User entity)
     {
-        context.Users.Add(user);
+        context.Users.Add(entity);
+    }
+
+    public void Update(User entity)
+    {
+        context.Users.Update(entity);
+    }
+
+    public void Delete(User entity)
+    {
+        context.Users.Remove(entity);
     }
 }

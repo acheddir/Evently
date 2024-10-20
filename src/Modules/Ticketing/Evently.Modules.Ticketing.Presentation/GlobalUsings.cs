@@ -6,6 +6,7 @@ global using Evently.Common.Presentation.ApiResults;
 global using Evently.Common.Presentation.Endpoints;
 global using Evently.Modules.Ticketing.Application.Carts.AddItemToCart;
 global using Evently.Modules.Ticketing.Application.Customers.CreateCustomer;
+global using Evently.Modules.Ticketing.Application.Customers.UpdateCustomer;
 global using Evently.Modules.Users.IntegrationEvents;
 global using MassTransit;
 global using MediatR;

@@ -1,8 +1,6 @@
 ﻿namespace Evently.Modules.Ticketing.Domain.Customers;
 
-public interface ICustomerRepository
+public interface ICustomerRepository : IRepository<Customer>
 {
-    Task<Customer?> GetAsync(Guid id, CancellationToken cancellationToken = default);
     Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken = default);
-    void Insert(Customer customer);
 }

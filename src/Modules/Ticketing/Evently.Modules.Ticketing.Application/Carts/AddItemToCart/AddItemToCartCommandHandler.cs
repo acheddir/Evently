@@ -2,12 +2,12 @@
 
 internal sealed class AddItemToCartCommandHandler(
     CartService cartService,
-    ICustomerRepository customerRepository,
+    ITicketingUnitOfWork ticketingUnitOfWork,
     IEventsApi eventsApi) : ICommandHandler<AddItemToCartCommand>
 {
     public async Task<Result> Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
     {
-        Customer? customer = await customerRepository.GetAsync(request.CustomerId, cancellationToken);
+        Customer? customer = await ticketingUnitOfWork.Customers.GetAsync(request.CustomerId, cancellationToken);
 
         if (customer is null)
         {

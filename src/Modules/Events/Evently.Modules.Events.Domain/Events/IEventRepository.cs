@@ -1,7 +1,5 @@
 ﻿namespace Evently.Modules.Events.Domain.Events;
 
-public interface IEventRepository
+public interface IEventRepository : IRepository<Event>
 {
-    Task<Event?> GetAsync(Guid id, CancellationToken cancellationToken = default);
-    void Insert(Event @event);
 }

@@ -1,11 +1,12 @@
 ﻿namespace Evently.Modules.Events.Application.Categories.ArchiveCategory;
 
-internal sealed class ArchiveCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
+internal sealed class ArchiveCategoryCommandHandler(
+    IEventsUnitOfWork eventsUnitOfWork)
     : ICommandHandler<ArchiveCategoryCommand>
 {
     public async Task<Result> Handle(ArchiveCategoryCommand request, CancellationToken cancellationToken)
     {
-        Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
+        Category? category = await eventsUnitOfWork.Categories.GetAsync(request.CategoryId, cancellationToken);
 
         if (category is null)
         {
@@ -19,7 +20,7 @@ internal sealed class ArchiveCategoryCommandHandler(ICategoryRepository category
 
         category.Archive();
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await eventsUnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

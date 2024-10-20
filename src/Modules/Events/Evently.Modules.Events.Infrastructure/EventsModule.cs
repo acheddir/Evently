@@ -14,7 +14,7 @@ public static class EventsModule
     {
         string dbConnectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<EventsDbContext>((sp, options) =>
+        services.AddDbContextFactory<EventsDbContext>((sp, options) =>
             options
                 .UseNpgsql(
                     dbConnectionString,
@@ -23,11 +23,7 @@ public static class EventsModule
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
 
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
-
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddScoped<IEventRepository, EventRepository>();
-        services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
+        services.AddScoped<IEventsUnitOfWork, EventsUnitOfWork>();
 
         services.AddScoped<IEventsApi, EventsApi>();
     }

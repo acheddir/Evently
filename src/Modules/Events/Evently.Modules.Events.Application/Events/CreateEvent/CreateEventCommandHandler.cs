@@ -2,9 +2,7 @@
 
 internal sealed class CreateEventCommandHandler(
     IDateTimeProvider dateTimeProvider,
-    ICategoryRepository categoryRepository,
-    IEventRepository eventRepository,
-    IUnitOfWork unitOfWork)
+    IEventsUnitOfWork eventsUnitOfWork)
     : ICommandHandler<CreateEventCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(CreateEventCommand request, CancellationToken cancellationToken)
@@ -14,7 +12,7 @@ internal sealed class CreateEventCommandHandler(
             return Result.Failure<Guid>(EventErrors.StartDateInPast);
         }
 
-        Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
+        Category? category = await eventsUnitOfWork.Categories.GetAsync(request.CategoryId, cancellationToken);
 
         if (category is null)
         {
@@ -34,9 +32,9 @@ internal sealed class CreateEventCommandHandler(
             return Result.Failure<Guid>(result.Error);
         }
 
-        eventRepository.Insert(result.Value);
+        eventsUnitOfWork.Events.Insert(result.Value);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await eventsUnitOfWork.SaveChangesAsync(cancellationToken);
 
         return result.Value.Id;
     }

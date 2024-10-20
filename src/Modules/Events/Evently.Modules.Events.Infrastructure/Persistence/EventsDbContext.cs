@@ -1,6 +1,6 @@
 ﻿namespace Evently.Modules.Events.Infrastructure.Persistence;
 
-public sealed class EventsDbContext(DbContextOptions<EventsDbContext> options) : DbContext(options), IUnitOfWork
+public sealed class EventsDbContext(DbContextOptions<EventsDbContext> options) : DbContext(options)
 {
     internal DbSet<Event> Events => Set<Event>();
     internal DbSet<Category> Categories => Set<Category>();

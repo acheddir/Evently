@@ -1,11 +1,12 @@
 namespace Evently.Modules.Users.Application.Users.UpdateUser;
 
-internal sealed class UpdateUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+internal sealed class UpdateUserCommandHandler(
+    IUsersUnitOfWork usersUnitOfWork)
     : ICommandHandler<UpdateUserCommand>
 {
     public async Task<Result> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        User? user = await userRepository.GetAsync(request.UserId, cancellationToken);
+        User? user = await usersUnitOfWork.Users.GetAsync(request.UserId, cancellationToken);
 
         if (user is null)
         {
@@ -14,7 +15,7 @@ internal sealed class UpdateUserCommandHandler(IUserRepository userRepository, I
 
         user.Update(request.FirstName, request.LastName);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await usersUnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

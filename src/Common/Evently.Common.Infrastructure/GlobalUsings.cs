@@ -10,6 +10,8 @@ global using Evently.Common.Domain;
 global using Evently.Common.Infrastructure.Services.Caching;
 global using Evently.Common.Infrastructure.Services.Clock;
 global using Evently.Common.Infrastructure.Services.EventBus;
+global using Evently.Common.Infrastructure.Services.Persistence.Factories;
+global using Evently.Common.Infrastructure.Services.Persistence.Interceptors;
 global using MassTransit;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;

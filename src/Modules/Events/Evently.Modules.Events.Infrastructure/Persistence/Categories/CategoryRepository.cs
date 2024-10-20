@@ -2,13 +2,23 @@
 
 public class CategoryRepository(EventsDbContext context) : ICategoryRepository
 {
-    public Task<Category?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public ValueTask<Category?> GetAsync(object id, CancellationToken cancellationToken = default)
     {
-        return context.Categories.SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+        return context.FindAsync<Category>([id], cancellationToken);
     }
 
-    public void Insert(Category category)
+    public void Insert(Category entity)
     {
-        context.Categories.Add(category);
+        context.Categories.Add(entity);
+    }
+
+    public void Update(Category entity)
+    {
+        context.Categories.Update(entity);
+    }
+
+    public void Delete(Category entity)
+    {
+        context.Categories.Remove(entity);
     }
 }

@@ -1,11 +1,12 @@
 ﻿namespace Evently.Modules.Events.Application.Categories.UpdateCategory;
 
-internal sealed class UpdateCategoryCommandHandler(ICategoryRepository categoryRepository, IUnitOfWork unitOfWork)
+internal sealed class UpdateCategoryCommandHandler(
+    IEventsUnitOfWork eventsUnitOfWork)
     : ICommandHandler<UpdateCategoryCommand>
 {
     public async Task<Result> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
-        Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
+        Category? category = await eventsUnitOfWork.Categories.GetAsync(request.CategoryId, cancellationToken);
 
         if (category is null)
         {
@@ -14,7 +15,7 @@ internal sealed class UpdateCategoryCommandHandler(ICategoryRepository categoryR
 
         category.ChangeName(request.Name);
 
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+        await eventsUnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

@@ -1,10 +1,12 @@
 ﻿namespace Evently.Modules.Ticketing.Application.Carts.ClearCart;
 
-public class ClearCartCommandHandler(ICustomerRepository customerRepository, CartService cartService) : ICommandHandler<ClearCartCommand>
+public class ClearCartCommandHandler(
+    ITicketingUnitOfWork ticketingUnitOfWork,
+    CartService cartService) : ICommandHandler<ClearCartCommand>
 {
     public async Task<Result> Handle(ClearCartCommand request, CancellationToken cancellationToken)
     {
-        bool exists = await customerRepository.ExistAsync(request.CustomerId, cancellationToken);
+        bool exists = await ticketingUnitOfWork.Customers.ExistAsync(request.CustomerId, cancellationToken);
 
         if (!exists)
         {

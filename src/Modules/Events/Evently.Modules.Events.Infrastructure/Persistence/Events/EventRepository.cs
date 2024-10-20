@@ -2,14 +2,23 @@
 
 internal sealed class EventRepository(EventsDbContext context) : IEventRepository
 {
-    public Task<Event?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public ValueTask<Event?> GetAsync(object id, CancellationToken cancellationToken = default)
     {
-        return context.Events
-            .SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+        return context.FindAsync<Event>([id], cancellationToken);
     }
 
-    public void Insert(Event @event)
+    public void Insert(Event entity)
     {
-        context.Events.Add(@event);
+        context.Events.Add(entity);
+    }
+
+    public void Update(Event entity)
+    {
+        context.Events.Update(entity);
+    }
+
+    public void Delete(Event entity)
+    {
+        context.Events.Remove(entity);
     }
 }

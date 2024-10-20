@@ -16,7 +16,7 @@ public static class UsersModule
     {
         string dbConnectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<UsersDbContext>((sp, options) =>
+        services.AddDbContextFactory<UsersDbContext>((sp, options) =>
             options
                 .UseNpgsql(
                     dbConnectionString,
@@ -25,8 +25,6 @@ public static class UsersModule
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
 
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
-
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUsersUnitOfWork, UsersUnitOfWork>();
     }
 }

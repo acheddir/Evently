@@ -1,6 +1,6 @@
 ﻿namespace Evently.Modules.Users.Infrastructure.Persistence;
 
-public class UsersDbContext(DbContextOptions<UsersDbContext> options) : DbContext(options), IUnitOfWork
+public class UsersDbContext(DbContextOptions<UsersDbContext> options) : DbContext(options)
 {
     internal DbSet<User> Users { get; set; }
 

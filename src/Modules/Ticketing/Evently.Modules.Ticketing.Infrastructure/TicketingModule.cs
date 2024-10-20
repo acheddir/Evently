@@ -15,13 +15,14 @@ public static class TicketingModule
     public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
     {
         registrationConfigurator.AddConsumer<UserRegisteredIntegrationEventConsumer>();
+        registrationConfigurator.AddConsumer<UserProfileUpdatedIntegrationEventConsumer>();
     }
 
     private static void AddTicketingInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         string dbConnectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<TicketingDbContext>((sp, options) =>
+        services.AddDbContextFactory<TicketingDbContext>((sp, options) =>
             options
                 .UseNpgsql(
                     dbConnectionString,
@@ -32,8 +33,6 @@ public static class TicketingModule
 
         services.AddSingleton<CartService>();
 
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<TicketingDbContext>());
-
-        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<ITicketingUnitOfWork, TicketingUnitOfWork>();
     }
 }
