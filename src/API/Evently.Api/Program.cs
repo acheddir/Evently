@@ -1,5 +1,3 @@
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
 Assembly[] applicationAssemblies =
 [
     Evently.Modules.Events.Application.AssemblyReference.Assembly,
@@ -14,8 +12,7 @@ Assembly[] presentationAssemblies =
     Evently.Modules.Ticketing.Presentation.AssemblyReference.Assembly,
 ];
 
-string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
-string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, loggerConfiguration) =>
 {
@@ -30,6 +27,9 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.CustomSchemaIds(t => t.FullName!.Replace("+", "."));
 });
+
+string dbConnectionString = builder.Configuration.GetConnectionString("Database")!;
+string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
 
 builder.Services.AddApplication(applicationAssemblies);
 builder.Services.AddInfrastructure(
@@ -52,13 +52,23 @@ WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.MapScalarApiReference();
+    app.UseSwagger(options =>
+    {
+        options.RouteTemplate = "openapi/{documentName}.json";
+    });
+    app.MapScalarApiReference(options =>
+    {
+        options.WithTitle("Evently API")
+            .WithTheme(ScalarTheme.Mars)
+            .WithDarkMode(true)
+            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+    });
 
     app.ApplyMigrations();
 }
 
 app.UseHttpsRedirection();
+
 app.MapEndpoints();
 
 app.MapHealthChecks("health", new HealthCheckOptions
@@ -67,6 +77,7 @@ app.MapHealthChecks("health", new HealthCheckOptions
 });
 
 app.UseSerilogRequestLogging();
+
 app.UseExceptionHandler();
 
 await app.RunAsync();
