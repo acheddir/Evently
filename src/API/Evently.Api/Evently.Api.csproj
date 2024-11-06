@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <UserSecretsId>e7608bb7-f68c-4d9f-a1e9-985184c5dfe8</UserSecretsId>
         <DockerfileContext>..\..\..</DockerfileContext>
         <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+        <UserSecretsId>1c8688c4-bb2d-4bb4-a4b1-cf7fe1793a1b</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
