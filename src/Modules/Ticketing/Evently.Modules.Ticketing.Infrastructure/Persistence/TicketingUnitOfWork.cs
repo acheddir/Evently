@@ -7,27 +7,52 @@ internal sealed class TicketingUnitOfWork : ITicketingUnitOfWork, IDisposable, I
         _context = dbContextFactory.CreateDbContext();
 
         Customers = new CustomerRepository(_context);
+        TicketTypes = new TicketTypeRepository(_context);
+        Events = new EventRepository(_context);
     }
 
     private readonly TicketingDbContext _context;
     private IDbContextTransaction? _transaction;
 
     public ICustomerRepository Customers { get; }
+    public ITicketTypeRepository TicketTypes { get; }
+    public IEventRepository Events { get; }
+    public IOrderRepository Orders { get; }
+    public IPaymentRepository Payments { get; }
+    public ITicketRepository Tickets { get; }
 
-    public void CreateTransaction()
+    public async Task CreateTransactionAsync(CancellationToken cancellationToken = default)
     {
-        _transaction = _context.Database.BeginTransaction();
+        if (_context.Database.CurrentTransaction is not null)
+        {
+            return;
+        }
+
+        _transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
     }
 
-    public void Commit()
+    public async Task CommitAsync(CancellationToken cancellationToken = default)
     {
-        _transaction?.Commit();
+        if (_transaction is null)
+        {
+            return;
+        }
+
+        await _transaction.CommitAsync(cancellationToken);
+        await _transaction.DisposeAsync();
+        _transaction = null;
     }
 
-    public void Rollback()
+    public async Task RollbackAsync(CancellationToken cancellationToken = default)
     {
-        _transaction?.Rollback();
-        _transaction?.Dispose();
+        if (_transaction is null)
+        {
+            return;
+        }
+
+        await _transaction.RollbackAsync(cancellationToken);
+        await _transaction.DisposeAsync();
+        _transaction = null;
     }
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

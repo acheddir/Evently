@@ -1,6 +1,6 @@
 ﻿namespace Evently.Modules.Ticketing.Application.Carts.GetCart;
 
-public class GetCartQueryHandler(CartService cartService) : IQueryHandler<GetCartQuery, Cart>
+public class GetCartQueryHandler(ICartService cartService) : IQueryHandler<GetCartQuery, Cart>
 {
     public async Task<Result<Cart>> Handle(GetCartQuery request, CancellationToken cancellationToken)
     {

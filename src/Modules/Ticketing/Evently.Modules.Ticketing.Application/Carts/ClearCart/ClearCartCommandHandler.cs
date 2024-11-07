@@ -2,7 +2,7 @@
 
 public class ClearCartCommandHandler(
     ITicketingUnitOfWork ticketingUnitOfWork,
-    CartService cartService) : ICommandHandler<ClearCartCommand>
+    ICartService cartService) : ICommandHandler<ClearCartCommand>
 {
     public async Task<Result> Handle(ClearCartCommand request, CancellationToken cancellationToken)
     {

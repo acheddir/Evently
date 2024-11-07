@@ -1,7 +1,7 @@
 ﻿namespace Evently.Modules.Ticketing.Application.Carts.AddItemToCart;
 
 internal sealed class AddItemToCartCommandHandler(
-    CartService cartService,
+    ICartService cartService,
     ITicketingUnitOfWork ticketingUnitOfWork,
     IEventsApi eventsApi) : ICommandHandler<AddItemToCartCommand>
 {

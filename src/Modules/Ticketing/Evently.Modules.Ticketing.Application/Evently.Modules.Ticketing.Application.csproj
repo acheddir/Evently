@@ -4,4 +4,7 @@
       <ProjectReference Include="..\..\Events\Evently.Modules.Events.PublicApi\Evently.Modules.Events.PublicApi.csproj" />
       <ProjectReference Include="..\Evently.Modules.Ticketing.Domain\Evently.Modules.Ticketing.Domain.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="TicketTypes\" />
+    </ItemGroup>
 </Project>

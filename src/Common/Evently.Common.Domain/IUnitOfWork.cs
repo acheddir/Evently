@@ -3,13 +3,13 @@
 public interface IUnitOfWork
 {
     //This Method will start the database transaction
-    void CreateTransaction();
+    Task CreateTransactionAsync(CancellationToken cancellationToken = default);
 
     //This Method will commit the database transaction
-    void Commit();
+    Task CommitAsync(CancellationToken cancellationToken = default);
 
-    //This Method will rollback the database transaction
-    void Rollback();
+    //This Method will roll back the database transaction
+    Task RollbackAsync(CancellationToken cancellationToken = default);
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

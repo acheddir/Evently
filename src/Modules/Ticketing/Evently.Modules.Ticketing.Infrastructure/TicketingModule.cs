@@ -31,7 +31,8 @@ public static class TicketingModule
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
 
-        services.AddSingleton<CartService>();
+        services.AddSingleton<ICartService, CartService>();
+        services.AddScoped<IPaymentService, PaymentService>();
 
         services.AddScoped<ITicketingUnitOfWork, TicketingUnitOfWork>();
     }
