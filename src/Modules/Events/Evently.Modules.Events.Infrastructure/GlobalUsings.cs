@@ -1,7 +1,7 @@
 global using System.Reflection;
 global using Evently.Common.Domain;
 global using Evently.Common.Infrastructure.Constants;
-global using Evently.Common.Infrastructure.Services.Persistence.Interceptors;
+global using Evently.Common.Infrastructure.Persistence.Interceptors;
 global using Evently.Common.Presentation.Endpoints;
 global using Evently.Modules.Events.Application.TicketTypes.GetTicketType;
 global using Evently.Modules.Events.Domain;

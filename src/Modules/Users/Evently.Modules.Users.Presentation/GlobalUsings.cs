@@ -1,5 +1,7 @@
 global using System.Reflection;
+global using System.Security.Claims;
 global using AutoMapper;
+global using Evently.Common.Application.Authentication;
 global using Evently.Common.Domain;
 global using Evently.Common.Presentation.ApiResults;
 global using Evently.Common.Presentation.Endpoints;

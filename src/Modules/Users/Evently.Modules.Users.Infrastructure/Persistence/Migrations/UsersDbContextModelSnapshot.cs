@@ -17,11 +17,109 @@ namespace Evently.Modules.Users.Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Users")
+                .HasDefaultSchema("users")
                 .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Evently.Modules.Users.Domain.Users.Permission", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("code");
+
+                    b.HasKey("Code")
+                        .HasName("pk_permissions");
+
+                    b.ToTable("permissions", "users");
+
+                    b.HasData(
+                        new
+                        {
+                            Code = "user:read"
+                        },
+                        new
+                        {
+                            Code = "event:read"
+                        },
+                        new
+                        {
+                            Code = "ticket-type:read"
+                        },
+                        new
+                        {
+                            Code = "category:read"
+                        },
+                        new
+                        {
+                            Code = "cart:read"
+                        },
+                        new
+                        {
+                            Code = "order:read"
+                        },
+                        new
+                        {
+                            Code = "ticket:read"
+                        },
+                        new
+                        {
+                            Code = "event-statistics:read"
+                        },
+                        new
+                        {
+                            Code = "user:write"
+                        },
+                        new
+                        {
+                            Code = "event:write"
+                        },
+                        new
+                        {
+                            Code = "ticket-type:write"
+                        },
+                        new
+                        {
+                            Code = "category:write"
+                        },
+                        new
+                        {
+                            Code = "cart:update"
+                        },
+                        new
+                        {
+                            Code = "order:create"
+                        },
+                        new
+                        {
+                            Code = "ticket:check-in"
+                        });
+                });
+
+            modelBuilder.Entity("Evently.Modules.Users.Domain.Users.Role", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Name")
+                        .HasName("pk_roles");
+
+                    b.ToTable("roles", "users");
+
+                    b.HasData(
+                        new
+                        {
+                            Name = "Administrator"
+                        },
+                        new
+                        {
+                            Name = "Member"
+                        });
+                });
 
             modelBuilder.Entity("Evently.Modules.Users.Domain.Users.User", b =>
                 {
@@ -42,6 +140,11 @@ namespace Evently.Modules.Users.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasColumnName("first_name");
 
+                    b.Property<string>("IdentityId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("identity_id");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -55,7 +158,210 @@ namespace Evently.Modules.Users.Infrastructure.Persistence.Migrations
                         .IsUnique()
                         .HasDatabaseName("ix_users_email");
 
-                    b.ToTable("users", "Users");
+                    b.HasIndex("IdentityId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_users_identity_id");
+
+                    b.ToTable("users", "users");
+                });
+
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.Property<string>("PermissionCode")
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("permission_code");
+
+                    b.Property<string>("RoleName")
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("role_name");
+
+                    b.HasKey("PermissionCode", "RoleName")
+                        .HasName("pk_role_permissions");
+
+                    b.HasIndex("RoleName")
+                        .HasDatabaseName("ix_role_permissions_role_name");
+
+                    b.ToTable("role_permissions", "users");
+
+                    b.HasData(
+                        new
+                        {
+                            PermissionCode = "user:read",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "event:read",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "ticket-type:read",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "cart:read",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "order:read",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "ticket:read",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "user:write",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "cart:update",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "order:create",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "ticket:check-in",
+                            RoleName = "Member"
+                        },
+                        new
+                        {
+                            PermissionCode = "user:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "event:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "ticket-type:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "category:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "cart:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "order:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "ticket:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "event-statistics:read",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "user:write",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "event:write",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "ticket-type:write",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "category:write",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "cart:update",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "order:create",
+                            RoleName = "Administrator"
+                        },
+                        new
+                        {
+                            PermissionCode = "ticket:check-in",
+                            RoleName = "Administrator"
+                        });
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<string>("RolesName")
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("role_name");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("RolesName", "UserId")
+                        .HasName("pk_user_roles");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_user_roles_user_id");
+
+                    b.ToTable("user_roles", "users");
+                });
+
+            modelBuilder.Entity("PermissionRole", b =>
+                {
+                    b.HasOne("Evently.Modules.Users.Domain.Users.Permission", null)
+                        .WithMany()
+                        .HasForeignKey("PermissionCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_role_permissions_permissions_permission_code");
+
+                    b.HasOne("Evently.Modules.Users.Domain.Users.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_role_permissions_roles_role_name");
+                });
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.HasOne("Evently.Modules.Users.Domain.Users.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RolesName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_roles_roles_roles_name");
+
+                    b.HasOne("Evently.Modules.Users.Domain.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_roles_users_user_id");
                 });
 #pragma warning restore 612, 618
         }

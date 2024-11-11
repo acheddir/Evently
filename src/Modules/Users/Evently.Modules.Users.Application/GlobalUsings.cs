@@ -1,11 +1,13 @@
 global using System.Data.Common;
 global using System.Reflection;
 global using Dapper;
+global using Evently.Common.Application.Authorization;
 global using Evently.Common.Application.EventBus;
 global using Evently.Common.Application.Exceptions;
 global using Evently.Common.Application.Messaging;
 global using Evently.Common.Application.Persistence;
 global using Evently.Common.Domain;
+global using Evently.Modules.Users.Application.Identity;
 global using Evently.Modules.Users.Application.Users.GetUser;
 global using Evently.Modules.Users.Domain;
 global using Evently.Modules.Users.Domain.Users;

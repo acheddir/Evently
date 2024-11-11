@@ -4,11 +4,12 @@ internal sealed class GetUserProfile : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("users/{id:guid}", async (Guid id, ISender sender) =>
+        endpoints.MapGet("users/profile", async (ClaimsPrincipal claims, ISender sender) =>
             {
-                Result<UserResponse> result = await sender.Send(new GetUserQuery(id));
+                Result<UserResponse> result = await sender.Send(new GetUserQuery(claims.GetUserId()));
                 return result.Match(Results.Ok, ApiResults.Problem);
             })
+            .RequireAuthorization("user:read")
             .WithTags(Tags.Users);
     }
 }

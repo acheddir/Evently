@@ -9,6 +9,9 @@ public static class InfrastructureConfiguration
         string redisConnectionString,
         Assembly[] assemblies)
     {
+        services.AddAuthenticationInternal();
+        services.AddAuthorizationInternal();
+        
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(dbConnectionString).Build();
         services.TryAddSingleton(npgsqlDataSource);
 
@@ -33,7 +36,7 @@ public static class InfrastructureConfiguration
         }
 
         services.TryAddSingleton<ICacheService, CacheService>();
-        services.TryAddSingleton<IEventBus, EventBus>();
+        services.TryAddSingleton<IEventBus, EventBus.EventBus>();
 
         services.AddMassTransit(configure =>
         {

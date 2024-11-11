@@ -9,6 +9,11 @@ public class UserRepository(UsersDbContext context) : IUserRepository
 
     public void Insert(User entity)
     {
+        foreach (Role role in entity.Roles)
+        {
+            context.Attach(role);
+        }
+
         context.Users.Add(entity);
     }
 

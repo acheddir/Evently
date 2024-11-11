@@ -1,7 +1,7 @@
 ﻿global using System.Reflection;
 global using Evently.Common.Application.Caching;
+global using Evently.Common.Infrastructure.Persistence.Interceptors;
 global using Evently.Common.Presentation.Endpoints;
-global using Evently.Common.Infrastructure.Services.Persistence.Interceptors;
 global using Evently.Modules.Ticketing.Application.Carts;
 global using Evently.Modules.Ticketing.Application.Payments;
 global using Evently.Modules.Ticketing.Domain;

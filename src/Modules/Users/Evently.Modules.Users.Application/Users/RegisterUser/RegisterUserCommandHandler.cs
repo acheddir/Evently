@@ -1,6 +1,7 @@
 namespace Evently.Modules.Users.Application.Users.RegisterUser;
 
 internal sealed class RegisterUserCommandHandler(
+    IIdentityProviderService identityProviderService,
     IUsersUnitOfWork usersUnitOfWork)
     : ICommandHandler<RegisterUserCommand, Guid>
 {
@@ -8,7 +9,22 @@ internal sealed class RegisterUserCommandHandler(
         RegisterUserCommand request,
         CancellationToken cancellationToken)
     {
-        var user = User.Create(request.Email, request.FirstName, request.LastName);
+        UserModel userModel = new(
+            request.Email,
+            request.Password,
+            request.FirstName,
+            request.LastName);
+
+        Result<string> result = await identityProviderService.RegisterUserAsync(
+            userModel,
+            cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure<Guid>(result.Error);
+        }
+
+        var user = User.Create(request.Email, request.FirstName, request.LastName, result.Value);
 
         usersUnitOfWork.Users.Insert(user);
 

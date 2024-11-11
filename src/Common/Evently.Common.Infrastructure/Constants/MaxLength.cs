@@ -2,7 +2,8 @@
 
 public static class MaxLength
 {
-    public const int ShortLen = 100;
-    public const int LongLen = 500;
+    public const int Small= 50;
+    public const int Medium = 100;
+    public const int Large = 500;
     public const int IsoCode3 = 3;
 }
