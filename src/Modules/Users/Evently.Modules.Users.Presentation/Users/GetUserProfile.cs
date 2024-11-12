@@ -1,12 +1,12 @@
-namespace Evently.Modules.Users.Presentation.Users;
+﻿namespace Evently.Modules.Users.Presentation.Users;
 
-internal sealed class GetUserProfile : IEndpoint
+public class GetUserProfile : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("users/profile", async (ClaimsPrincipal claims, ISender sender) =>
+        endpoints.MapGet("users/{id}", async (Guid id, ISender sender) =>
             {
-                Result<UserResponse> result = await sender.Send(new GetUserQuery(claims.GetUserId()));
+                Result<UserResponse> result = await sender.Send(new GetUserQuery(id));
                 return result.Match(Results.Ok, ApiResults.Problem);
             })
             .RequireAuthorization("user:read")
