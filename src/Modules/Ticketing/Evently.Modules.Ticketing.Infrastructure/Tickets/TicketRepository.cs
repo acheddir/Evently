@@ -6,7 +6,7 @@ internal sealed class TicketRepository(TicketingDbContext context) : ITicketRepo
 {
     public async Task<IEnumerable<Ticket>> GetForEventAsync(
         Event @event,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         return await context.Tickets.Where(t => t.EventId == @event.Id).ToListAsync(cancellationToken);
     }

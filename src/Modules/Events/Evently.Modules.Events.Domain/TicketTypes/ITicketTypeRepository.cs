@@ -2,5 +2,5 @@
 
 public interface ITicketTypeRepository : IRepository<TicketType>
 {
-    Task<bool> ExistsAsync(Guid eventId, CancellationToken cancellationToken = default);
+    Task<bool> ExistsAsync(Guid eventId, CancellationToken cancellationToken);
 }

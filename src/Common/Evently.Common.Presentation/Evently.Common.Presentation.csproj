@@ -3,7 +3,7 @@
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MassTransit.Abstractions" Version="8.2.5" />
+        <PackageReference Include="MassTransit.Abstractions" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Evently.Common.Domain\Evently.Common.Domain.csproj" />

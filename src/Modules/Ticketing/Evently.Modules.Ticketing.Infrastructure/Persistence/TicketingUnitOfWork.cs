@@ -9,6 +9,9 @@ internal sealed class TicketingUnitOfWork : ITicketingUnitOfWork, IDisposable, I
         Customers = new CustomerRepository(_context);
         TicketTypes = new TicketTypeRepository(_context);
         Events = new EventRepository(_context);
+        Orders = new OrderRepository(_context);
+        Payments = new PaymentRepository(_context);
+        Tickets = new TicketRepository(_context);
     }
 
     private readonly TicketingDbContext _context;
@@ -21,7 +24,7 @@ internal sealed class TicketingUnitOfWork : ITicketingUnitOfWork, IDisposable, I
     public IPaymentRepository Payments { get; }
     public ITicketRepository Tickets { get; }
 
-    public async Task CreateTransactionAsync(CancellationToken cancellationToken = default)
+    public async Task CreateTransactionAsync(CancellationToken cancellationToken)
     {
         if (_context.Database.CurrentTransaction is not null)
         {
@@ -31,31 +34,31 @@ internal sealed class TicketingUnitOfWork : ITicketingUnitOfWork, IDisposable, I
         _transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
     }
 
-    public async Task CommitAsync(CancellationToken cancellationToken = default)
+    public async Task CommitAsync(CancellationToken cancellationToken)
     {
         if (_transaction is null)
         {
             return;
         }
 
-        await _transaction.CommitAsync(cancellationToken);
+        await _transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
         await _transaction.DisposeAsync();
         _transaction = null;
     }
 
-    public async Task RollbackAsync(CancellationToken cancellationToken = default)
+    public async Task RollbackAsync(CancellationToken cancellationToken)
     {
         if (_transaction is null)
         {
             return;
         }
 
-        await _transaction.RollbackAsync(cancellationToken);
+        await _transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
         await _transaction.DisposeAsync();
         _transaction = null;
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         return _context.SaveChangesAsync(cancellationToken);
     }

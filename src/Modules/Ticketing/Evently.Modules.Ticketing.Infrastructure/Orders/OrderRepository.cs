@@ -2,7 +2,7 @@
 
 internal sealed class OrderRepository(TicketingDbContext context) : IOrderRepository
 {
-    public async Task<Order?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Order?> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context.Orders
             .Include(o => o.OrderItems)

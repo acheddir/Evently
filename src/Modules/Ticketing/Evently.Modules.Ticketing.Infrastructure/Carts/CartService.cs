@@ -19,7 +19,7 @@ public sealed class CartService(ICacheService cacheService) : ICartService
 
         var cart = Cart.CreateDefault(customerId);
 
-        await cacheService.SetAsync(cacheKey, cart, DefaultExpiration, cancellationToken);
+        await cacheService.SetAsync(cacheKey, cart, DefaultExpiration, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task AddItemAsync(Guid customerId, CartItem cartItem, CancellationToken cancellationToken = default)
@@ -39,7 +39,7 @@ public sealed class CartService(ICacheService cacheService) : ICartService
             existingCartItem.Quantity += cartItem.Quantity;
         }
 
-        await cacheService.SetAsync(cacheKey, cart, DefaultExpiration, cancellationToken);
+        await cacheService.SetAsync(cacheKey, cart, DefaultExpiration, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task RemoveItemAsync(Guid customerId, Guid ticketTypeId, CancellationToken cancellationToken = default)
@@ -57,7 +57,7 @@ public sealed class CartService(ICacheService cacheService) : ICartService
 
         cart.Items.Remove(cartItem);
 
-        await cacheService.SetAsync(cacheKey, cart, DefaultExpiration, cancellationToken);
+        await cacheService.SetAsync(cacheKey, cart, DefaultExpiration, cancellationToken).ConfigureAwait(false);
     }
 
     private static string CreateCacheKey(Guid customerId) => $"carts:{customerId}";

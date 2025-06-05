@@ -2,12 +2,12 @@
 
 internal sealed class CustomerRepository(TicketingDbContext context) : ICustomerRepository
 {
-    public Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken)
     {
         return context.Customers.AnyAsync(customer => customer.Id == id, cancellationToken);
     }
 
-    public ValueTask<Customer?> GetAsync(object id, CancellationToken cancellationToken = default)
+    public ValueTask<Customer?> GetAsync(object id, CancellationToken cancellationToken)
     {
         return context.FindAsync<Customer>([id], cancellationToken);
     }

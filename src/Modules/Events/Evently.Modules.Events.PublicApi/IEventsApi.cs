@@ -2,5 +2,5 @@
 
 public interface IEventsApi
 {
-    Task<TicketTypeResponse?> GetTicketTypesAsync(Guid ticketTypeId, CancellationToken cancellationToken = default);
+    Task<TicketTypeResponse?> GetTicketTypesAsync(Guid ticketTypeId, CancellationToken cancellationToken);
 }

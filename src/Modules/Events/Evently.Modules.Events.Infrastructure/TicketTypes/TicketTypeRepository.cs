@@ -2,12 +2,12 @@
 
 public class TicketTypeRepository(EventsDbContext context) : ITicketTypeRepository
 {
-    public Task<bool> ExistsAsync(Guid eventId, CancellationToken cancellationToken = default)
+    public Task<bool> ExistsAsync(Guid eventId, CancellationToken cancellationToken)
     {
         return context.TicketTypes.AnyAsync(t => t.EventId == eventId, cancellationToken);
     }
 
-    public ValueTask<TicketType?> GetAsync(object id, CancellationToken cancellationToken = default)
+    public ValueTask<TicketType?> GetAsync(object id, CancellationToken cancellationToken)
     {
         return context.FindAsync<TicketType>([id], cancellationToken);
     }

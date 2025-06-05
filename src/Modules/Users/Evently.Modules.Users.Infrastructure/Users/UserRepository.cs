@@ -2,7 +2,7 @@
 
 public class UserRepository(UsersDbContext context) : IUserRepository
 {
-    public ValueTask<User?> GetAsync(object id, CancellationToken cancellationToken = default)
+    public ValueTask<User?> GetAsync(object id, CancellationToken cancellationToken)
     {
         return context.Users.FindAsync([id], cancellationToken);
     }

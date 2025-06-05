@@ -18,7 +18,7 @@ internal sealed class EventsUnitOfWork : IEventsUnitOfWork, IDisposable, IAsyncD
     public IEventRepository Events { get; }
     public ITicketTypeRepository TicketTypes { get; }
 
-    public async Task CreateTransactionAsync(CancellationToken cancellationToken = default)
+    public async Task CreateTransactionAsync(CancellationToken cancellationToken)
     {
         if (_context.Database.CurrentTransaction is not null)
         {
@@ -28,31 +28,31 @@ internal sealed class EventsUnitOfWork : IEventsUnitOfWork, IDisposable, IAsyncD
         _transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
     }
 
-    public async Task CommitAsync(CancellationToken cancellationToken = default)
+    public async Task CommitAsync(CancellationToken cancellationToken)
     {
         if (_transaction is null)
         {
             return;
         }
 
-        await _transaction.CommitAsync(cancellationToken);
+        await _transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
         await _transaction.DisposeAsync();
         _transaction = null;
     }
 
-    public async Task RollbackAsync(CancellationToken cancellationToken = default)
+    public async Task RollbackAsync(CancellationToken cancellationToken)
     {
         if (_transaction is null)
         {
             return;
         }
 
-        await _transaction.RollbackAsync(cancellationToken);
+        await _transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
         await _transaction.DisposeAsync();
         _transaction = null;
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         return _context.SaveChangesAsync(cancellationToken);
     }

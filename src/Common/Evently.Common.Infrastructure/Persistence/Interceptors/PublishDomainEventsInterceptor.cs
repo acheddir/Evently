@@ -10,7 +10,7 @@ public sealed class PublishDomainEventsInterceptor(IServiceScopeFactory serviceS
     {
         if (eventData.Context is not null)
         {
-            await PublishDomainEventsAsync(eventData.Context);
+            await PublishDomainEventsAsync(eventData.Context).ConfigureAwait(false);
         }
 
         return await base.SavedChangesAsync(eventData, result, cancellationToken);
@@ -34,7 +34,7 @@ public sealed class PublishDomainEventsInterceptor(IServiceScopeFactory serviceS
 
         foreach (IDomainEvent domainEvent in domainEvents)
         {
-            await publisher.Publish(domainEvent);
+            await publisher.Publish(domainEvent).ConfigureAwait(false);
         }
     }
 }

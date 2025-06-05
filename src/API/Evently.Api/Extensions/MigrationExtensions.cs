@@ -1,5 +1,4 @@
-﻿
-namespace Evently.Api.Extensions;
+﻿namespace Evently.Api.Extensions;
 
 internal static class MigrationExtensions
 {

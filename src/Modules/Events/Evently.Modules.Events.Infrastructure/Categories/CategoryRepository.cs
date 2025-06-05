@@ -2,7 +2,7 @@
 
 public class CategoryRepository(EventsDbContext context) : ICategoryRepository
 {
-    public ValueTask<Category?> GetAsync(object id, CancellationToken cancellationToken = default)
+    public ValueTask<Category?> GetAsync(object id, CancellationToken cancellationToken)
     {
         return context.FindAsync<Category>([id], cancellationToken);
     }

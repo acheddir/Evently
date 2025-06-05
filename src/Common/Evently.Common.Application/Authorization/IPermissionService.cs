@@ -2,5 +2,6 @@
 
 public interface IPermissionService
 {
-    Task<Result<PermissionResponse>> GetUserPermissionsAsync(string identityId, CancellationToken cancellationToken = default);
+    Task<Result<PermissionResponse>> GetUserPermissionsAsync(string identityId);
+    Task<Result<PermissionResponse>> GetUserPermissionsAsync(string identityId, CancellationToken cancellationToken);
 }

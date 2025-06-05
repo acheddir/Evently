@@ -4,7 +4,7 @@ namespace Evently.Modules.Ticketing.Infrastructure.Events;
 
 internal sealed class EventRepository(TicketingDbContext context) : IEventRepository
 {
-    public async Task<Event?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Event?> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context.Events.SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
     }

@@ -4,14 +4,14 @@ namespace Evently.Modules.Ticketing.Infrastructure.Payments;
 
 internal sealed class PaymentRepository(TicketingDbContext context) : IPaymentRepository
 {
-    public async Task<Payment?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Payment?> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context.Payments.SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
     public async Task<IEnumerable<Payment>> GetForEventAsync(
         Event @event,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
         return await (
             from order in context.Orders

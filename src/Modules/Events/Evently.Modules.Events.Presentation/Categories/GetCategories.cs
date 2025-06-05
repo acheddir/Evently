@@ -20,7 +20,7 @@ internal sealed class GetCategories : IEndpoint
 
                 if (result.IsSuccess)
                 {
-                    await cacheService.SetAsync("categories", result.Value);
+                    await cacheService.SetAsync("categories", result.Value).ConfigureAwait(false);
                 }
 
                 return result.Match(Results.Ok, ApiResults.Problem);

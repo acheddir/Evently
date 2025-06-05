@@ -4,7 +4,7 @@ namespace Evently.Modules.Events.Infrastructure.PublicApi;
 
 internal sealed class EventsApi(ISender sender) : IEventsApi
 {
-    public async Task<TicketTypeResponse?> GetTicketTypesAsync(Guid ticketTypeId, CancellationToken cancellationToken = default)
+    public async Task<TicketTypeResponse?> GetTicketTypesAsync(Guid ticketTypeId, CancellationToken cancellationToken)
     {
         Result<Application.TicketTypes.GetTicketType.TicketTypeResponse> result = await sender.Send(new GetTicketTypeQuery(ticketTypeId), cancellationToken);
 

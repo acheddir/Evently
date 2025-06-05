@@ -2,5 +2,5 @@
 
 public interface ICustomerRepository : IRepository<Customer>
 {
-    Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<bool> ExistAsync(Guid id, CancellationToken cancellationToken);
 }

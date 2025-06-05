@@ -2,12 +2,12 @@
 
 internal sealed class TicketTypeRepository(TicketingDbContext context) : ITicketTypeRepository
 {
-    public async Task<TicketType?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<TicketType?> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context.TicketTypes.SingleOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 
-    public async Task<TicketType?> GetWithLockAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<TicketType?> GetWithLockAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context
             .TicketTypes

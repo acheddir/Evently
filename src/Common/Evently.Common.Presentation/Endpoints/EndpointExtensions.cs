@@ -2,7 +2,7 @@
 
 public static class EndpointExtensions
 {
-    public static IServiceCollection AddEndpoints(this IServiceCollection services, params Assembly[] assemblies)
+    public static void AddEndpoints(this IServiceCollection services, params Assembly[] assemblies)
     {
         ServiceDescriptor[] serviceDescriptors = assemblies
             .SelectMany(a => a.GetTypes())
@@ -12,13 +12,15 @@ public static class EndpointExtensions
             .ToArray();
 
         services.TryAddEnumerable(serviceDescriptors);
-
-        return services;
+    }
+    
+    public static void MapEndpoints(this WebApplication app)
+    {
+        app.MapEndpoints(null);
     }
 
-    public static IApplicationBuilder MapEndpoints(
-        this WebApplication app,
-        RouteGroupBuilder? routeGroupBuilder = null)
+    private static void MapEndpoints(this WebApplication app,
+        RouteGroupBuilder? routeGroupBuilder)
     {
         IEnumerable<IEndpoint> endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>();
 
@@ -28,7 +30,5 @@ public static class EndpointExtensions
         {
             endpoint.MapEndpoint(builder);
         }
-
-        return app;
     }
 }

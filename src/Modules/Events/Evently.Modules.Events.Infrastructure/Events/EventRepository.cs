@@ -2,7 +2,7 @@
 
 internal sealed class EventRepository(EventsDbContext context) : IEventRepository
 {
-    public ValueTask<Event?> GetAsync(object id, CancellationToken cancellationToken = default)
+    public ValueTask<Event?> GetAsync(object id, CancellationToken cancellationToken)
     {
         return context.FindAsync<Event>([id], cancellationToken);
     }

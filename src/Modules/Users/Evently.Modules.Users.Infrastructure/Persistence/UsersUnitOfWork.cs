@@ -14,7 +14,7 @@ internal sealed class UsersUnitOfWork : IUsersUnitOfWork, IDisposable, IAsyncDis
 
     public IUserRepository Users { get; }
 
-    public async Task CreateTransactionAsync(CancellationToken cancellationToken = default)
+    public async Task CreateTransactionAsync(CancellationToken cancellationToken)
     {
         if (_context.Database.CurrentTransaction is not null)
         {
@@ -24,7 +24,7 @@ internal sealed class UsersUnitOfWork : IUsersUnitOfWork, IDisposable, IAsyncDis
         _transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
     }
 
-    public async Task CommitAsync(CancellationToken cancellationToken = default)
+    public async Task CommitAsync(CancellationToken cancellationToken)
     {
         if (_transaction is null)
         {
@@ -36,7 +36,7 @@ internal sealed class UsersUnitOfWork : IUsersUnitOfWork, IDisposable, IAsyncDis
         _transaction = null;
     }
 
-    public async Task RollbackAsync(CancellationToken cancellationToken = default)
+    public async Task RollbackAsync(CancellationToken cancellationToken)
     {
         if (_transaction is null)
         {
@@ -48,7 +48,7 @@ internal sealed class UsersUnitOfWork : IUsersUnitOfWork, IDisposable, IAsyncDis
         _transaction = null;
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         return _context.SaveChangesAsync(cancellationToken);
     }
